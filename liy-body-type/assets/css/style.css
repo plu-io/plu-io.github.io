@@ -1,0 +1,88 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    color: #222;
+}
+
+body {
+    background-color: #fff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.45;
+}
+
+input {
+    text-align: center;
+    width: 9em;
+    height: 3em;
+}
+
+.page {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.section {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0px 10px 0px;
+}
+
+.section div {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0px 0px 0px;
+}
+
+.results div {
+    width: 100%;
+}
+
+/* mobile */
+@media only screen and (max-width: 414px) {
+
+    
+    
+}
+
+/* tablet */
+@media only screen and (min-width: 415px) and (max-width: 720px) {
+    
+    .page {
+        max-width: 512px;
+        margin: 0 auto;
+    }
+    
+    .bust, .waist, .hips {
+        width: 33.33%;
+    }
+    
+    .results div {
+        width: 50%;
+    }
+    
+}
+
+/* desktop */
+@media only screen and (min-width: 721px) {
+    
+    .page {
+        width: 512px;
+        margin: 0 auto;
+    }
+    
+    .bust, .waist, .hips {
+        width: 33.33%;
+    }
+    
+    .results div {
+        width: 50%;
+    }
+    
+}
