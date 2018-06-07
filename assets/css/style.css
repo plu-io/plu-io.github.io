@@ -2,6 +2,27 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: monospace;
+}
+
+body {
     color: #222;
+    font-family: monospace;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    line-height: 1.45;
+}
+
+.page {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 512px;
+}
+
+.section {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0px 10px 0px;
 }
