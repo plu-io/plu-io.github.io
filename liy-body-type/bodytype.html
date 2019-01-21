@@ -1,41 +1,128 @@
 <!DOCTYPE html>
 
 <html lang="en">
-    <head>
-        <title>LIY Body Type Calculator</title>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-        <link href="assets/css/style.css" rel="stylesheet" type="text/css">
-        <script src="assets/js/main.js" type="text/javascript"></script>
-    </head>
-    <body>
-        <div class="page">
-            <div class="section bust">
-                <div>
-                    <h2>BUST</h2>
-                </div>
-                <input type="text" placeholder="bust measurement"  pattern="[0-9]*" id="InputBust" />
-            </div>
-            <div class="section waist">
-                <div>
-                    <h2>WAIST</h2>
-                </div>
-                <input type="text" placeholder="waist measurement" pattern="[0-9]*" id="InputWaist" />
-            </div>
-            <div class="section hips">
-                <div>
-                    <h2>HIPS</h2>
-                </div>
-                <input type="text" placeholder="hips measurement"  pattern="[0-9]*" id="InputHips" />
-            </div>
-            <div class="section results">
-                <div>
-                    <input type="button" value="Calculate Results" id="ResButton" />
-                </div>
-                <div id="Results">
-                    <h2>BODY TYPE:</h2>
-                </div>
-            </div>
-        </div>
-    </body>
+
+<head>
+
+  <title>LIY Body Type Calculator</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+    <!--<script src="assets/js/main.js" type="text/javascript"></script>-->
+
+</head>
+
+<body>
+
+  <div class="page">
+    <div class="section bust">
+      <div>
+        <h2>BUST</h2>
+      </div>
+      <input type="text" placeholder="bust measurement"  pattern="[0-9]*" id="InputBust" required="true" />
+    </div>
+    <div class="section waist">
+      <div>
+        <h2>WAIST</h2>
+      </div>
+      <input type="text" placeholder="waist measurement" pattern="[0-9]*" id="InputWaist" required="true" />
+    </div>
+    <div class="section hips">
+      <div>
+        <h2>HIPS</h2>
+      </div>
+      <input type="text" placeholder="hips measurement"  pattern="[0-9]*" id="InputHips" required="true" />
+    </div>
+    <div class="section email">
+      <div>
+        <h2>EMAIL</h2>
+      </div>
+      <input type="email" placeholder="hello@livinginyellow.com" id="InputEmail" autocomplete="email" required="true" />
+    </div>
+    <div class="section button">
+      <input type="button" value="Calculate Results" id="ResButton" />
+    </div>
+    <div class="section results">
+      <div id="Results">
+        <h2></h2>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+<!-- Drip -->
+<script type="text/javascript">
+
+  var _dcq = _dcq || [];
+  var _dcs = _dcs || {};
+  _dcs.account = '5575717';
+
+  (function() {
+    var dc = document.createElement('script');
+    dc.type = 'text/javascript'; dc.async = true;
+    dc.src = 'https://tag.getdrip.com/5575717.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(dc, s);
+    //console.log(document.getElementsByTagName('script'));
+  })();
+
+</script>
+<!-- end Drip -->
+
+<script type="text/javascript">
+
+var bodyType   = null;
+    dripBody   = null;
+
+var InputBust  = document.getElementById("InputBust"),
+    InputWaist = document.getElementById("InputWaist"),
+    InputHips  = document.getElementById("InputHips"),
+    InputEmail = document.getElementById("InputEmail"),
+    Results    = document.getElementById("Results"),
+    ResButton  = document.getElementById("ResButton");
+
+ResButton.addEventListener("click", getResults);
+
+function getResults() {
+
+  if (InputEmail.value != "" && InputBust.value > 0 && InputWaist.value > 0 && InputHips.value > 0) {
+    if (InputBust.value / InputHips.value >= 0.95 && InputBust.value / InputHips.value <= 1.05) {
+      if (InputWaist.value / InputBust.value > 0.75 && InputWaist.value / InputHips.value > 0.75) {
+        bodyType = "BANANA";
+        dripBody = "Calculator Banana Result";
+      } else {
+        bodyType = "HOURGLASS";
+        dripBody = "Calculator Hourglass Result";
+      }
+    } else {
+      if (InputBust.value > InputHips.value) {
+        bodyType = "APPLE";
+        dripBody = "Calculator Apple Result";
+      } else {
+        bodyType = "PEAR";
+        dripBody = "Calculator Pear Result";
+      }
+    } else {
+      bodyType = "UNSPECIFIED";
+    }
+
+    Results.innerHTML = "<h2>" + bodyType + " BODY</h2>";
+
+    _dcq.push(["identify", {
+      email: InputEmail.value,
+      tags: [dripBody],
+      success: function(response) {
+        console.log(response);
+      }
+    }]);
+  } else {
+    Results.innerHTML = "<h2>ERROR WITH ENTRY</h2>";
+  }
+}
+
+</script>
+
 </html>
