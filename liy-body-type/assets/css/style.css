@@ -1,88 +1,120 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
-    color: #222;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Muli', sans-serif;
+  color: #58595b;
 }
 
 body {
-    background-color: #fff;
+  background-color: #fff;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    line-height: 1.45;
+  font-family: 'Karla', sans-serif;
+  line-height: 1.45;
 }
 
 input {
-    text-align: center;
-    width: 9em;
-    height: 3em;
+  border: 1px solid #eee;
+  text-align: center;
+  width: 9em;
+  height: 3em;
+  padding: 0px 5px 0px 5px;
+}
+
+#InputEmail {
+  text-align: left;
+  width: 50%;
+  min-width: 9em;
 }
 
 .page {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .section {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 0px 10px 0px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0px 10px 0px;
 }
 
 .section div {
-    width: 100%;
-    text-align: center;
-    padding: 10px 0px 0px 0px;
+  width: 100%;
+  text-align: center;
 }
 
 .results div {
-    width: 100%;
+  width: 100%;
 }
+
+/*
+.bust {
+  background-color: #eff;
+}
+
+.waist {
+  background-color: #fef;
+}
+
+.hips {
+  background-color: #ffe;
+}
+
+.email {
+  background-color: #def;
+}
+
+.button {
+  background-color: #fed;
+}
+
+.results {
+  background-color: #eef;
+}
+*/
 
 /* mobile */
 @media only screen and (max-width: 414px) {
 
-    
-    
+  .bust, .waist, .hips, .email {
+    width: 100%;
+  }
+
+  .results div {
+    width: 100%;
+  }
+
 }
 
 /* tablet */
 @media only screen and (min-width: 415px) and (max-width: 720px) {
-    
-    .page {
-        max-width: 512px;
-        margin: 0 auto;
-    }
-    
-    .bust, .waist, .hips {
-        width: 33.33%;
-    }
-    
-    .results div {
-        width: 50%;
-    }
-    
+
+  .page {
+    max-width: 512px;
+    margin: 0 auto;
+  }
+
+  .bust, .waist, .hips {
+    width: 33.33%;
+  }
+
 }
 
 /* desktop */
 @media only screen and (min-width: 721px) {
-    
-    .page {
-        width: 512px;
-        margin: 0 auto;
-    }
-    
-    .bust, .waist, .hips {
-        width: 33.33%;
-    }
-    
-    .results div {
-        width: 50%;
-    }
-    
+
+  .page {
+    width: 512px;
+    margin: 0 auto;
+  }
+
+  .bust, .waist, .hips {
+    width: 33.33%;
+  }
+
 }
