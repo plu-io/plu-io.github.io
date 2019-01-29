@@ -76,6 +76,7 @@
 
 var bodyType   = null;
     dripBody   = null;
+     notBody   = [];
 
 var InputBust  = document.getElementById("InputBust"),
     InputWaist = document.getElementById("InputWaist"),
@@ -93,24 +94,29 @@ function getResults() {
       if (InputWaist.value / InputBust.value > 0.75 && InputWaist.value / InputHips.value > 0.75) {
         bodyType = "BANANA";
         dripBody = "Calculator Banana Result";
+        notBody  = ["Calculator Apple Result", "Calculator Hourglass Result", "Calculator Pear Result"];
       } else {
         bodyType = "HOURGLASS";
         dripBody = "Calculator Hourglass Result";
+        notBody  = ["Calculator Apple Result", "Calculator Banana Result", "Calculator Pear Result"];
       }
     } else {
       if (InputBust.value > InputHips.value) {
         bodyType = "APPLE";
         dripBody = "Calculator Apple Result";
+        notBody  = ["Calculator Banana Result", "Calculator Hourglass Result", "Calculator Pear Result"];
       } else {
         bodyType = "PEAR";
         dripBody = "Calculator Pear Result";
+        notBody  = ["Calculator Apple Result", "Calculator Banana Result", "Calculator Hourglass Result"];
       }
     }
-    
+
     Results.innerHTML = "<h2>" + bodyType + " BODY</h2>";
 
     _dcq.push(["identify", {
       email: InputEmail.value,
+      remove_tags: [notBody[0], notBody[1], notBody[2]],
       tags: [dripBody],
       success: function(response) {
         console.log(response);
