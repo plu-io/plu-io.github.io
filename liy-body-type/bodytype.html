@@ -34,19 +34,24 @@
       </div>
       <input type="text" placeholder="inches"  pattern="[0-9]*" id="InputHips" required="true" />
     </div>
+    <div class="section errorPar" id="measureErrorDiv">
+
+    </div>
     <div class="section email">
       <div>
         <h2>EMAIL</h2>
       </div>
       <input type="email" placeholder="hello@livinginyellow.com" id="InputEmail" autocomplete="email" required="true" />
     </div>
-    <div class="section button">
-      <input type="button" value="Calculate Results" id="ResButton" />
+    <div class="section errorPar" id="emailErrorDiv">
+
     </div>
-    <div class="section results">
-      <div id="Results">
-        <h2></h2>
-      </div>
+    <div class="section subCheckbox">
+      <input type="checkbox" id="SubscribeCheck" name="SubscribeCheck" checked>
+      <p>Subscribe?</p>
+    </div>
+    <div class="section button">
+      <input type="button" value="CALCULATE RESULTS" id="ResButton" />
     </div>
   </div>
 
@@ -54,11 +59,9 @@
 
 <!-- Drip -->
 <script type="text/javascript">
-
   var _dcq = _dcq || [];
   var _dcs = _dcs || {};
   _dcs.account = '5575717';
-
   (function() {
     var dc = document.createElement('script');
     dc.type = 'text/javascript'; dc.async = true;
@@ -66,72 +69,113 @@
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(dc, s);
   })();
-
 </script>
 <!-- end Drip -->
 
 <script type="text/javascript">
+  var bodyType   = null,
+      dripBody   = null,
+      bustVal    = null,
+      waistVal   = null,
+      hipsVal    = null,
+      subVal     = null,
+      notBody    = [],
+      InputBust  = document.getElementById("InputBust"),
+      InputWaist = document.getElementById("InputWaist"),
+      InputHips  = document.getElementById("InputHips"),
+      MeasureErr = document.getElementById("measureErrorDiv"),
+      InputEmail = document.getElementById("InputEmail"),
+      EmailErr   = document.getElementById("emailErrorDiv"),
+      InputSub   = document.getElementById("SubscribeCheck"),
+      ResButton  = document.getElementById("ResButton");
 
-var bodyType   = null,
-    dripBody   = null,
-     notBody   = [];
+  InputBust.addEventListener("blur", checkDatValidity);
+  InputWaist.addEventListener("blur", checkDatValidity);
+  InputHips.addEventListener("blur", checkDatValidity);
+  InputEmail.addEventListener("blur", checkDatValidity);
 
-var InputBust  = document.getElementById("InputBust"),
-    BustVal    = null;
-    InputWaist = document.getElementById("InputWaist"),
-    WaistVal   = null;
-    InputHips  = document.getElementById("InputHips"),
-    HipsVal    = null;
-    InputEmail = document.getElementById("InputEmail"),
-    Results    = document.getElementById("Results"),
-    ResButton  = document.getElementById("ResButton");
-
-ResButton.addEventListener("click", getResults);
-
-function getResults() {
-
-  BustVal  = parseInt(InputBust.value);
-  WaistVal = parseInt(InputWaist.value);
-  HipsVal  = parseInt(InputHips.value);
-
-  if (InputEmail.value != "" && BustVal > 0 && WaistVal > 0 && HipsVal > 0) {
-    if (BustVal / HipsVal >= 0.95 && BustVal / HipsVal <= 1.05) {
-      if (WaistVal / BustVal > 0.75 && WaistVal / HipsVal > 0.75) {
-        bodyType = "BANANA";
-        dripBody = "Calculator Banana Result";
-        notBody  = ["Calculator Apple Result", "Calculator Hourglass Result", "Calculator Pear Result"];
-      } else {
-        bodyType = "HOURGLASS";
-        dripBody = "Calculator Hourglass Result";
-        notBody  = ["Calculator Apple Result", "Calculator Banana Result", "Calculator Pear Result"];
-      }
-    } else {
-      if (BustVal > HipsVal) {
-        bodyType = "APPLE";
-        dripBody = "Calculator Apple Result";
-        notBody  = ["Calculator Banana Result", "Calculator Hourglass Result", "Calculator Pear Result"];
-      } else {
-        bodyType = "PEAR";
-        dripBody = "Calculator Pear Result";
-        notBody  = ["Calculator Apple Result", "Calculator Banana Result", "Calculator Hourglass Result"];
-      }
+  function checkDatValidity() {
+    if (InputBust.value.substr(InputBust.value.length - 7, 7) == ' inches') {
+      InputBust.value = InputBust.value.substr(0, InputBust.value.length - 7);
+    }
+    if (InputBust.value.substr(InputBust.value.length - 6, 6) == 'inches') {
+      InputBust.value = InputBust.value.substr(0, InputBust.value.length - 6);
+    }
+    if (InputBust.value.substr(InputBust.value.length - 5, 5) == ' inch') {
+      InputBust.value = InputBust.value.substr(0, InputBust.value.length - 5);
+    }
+    if (InputBust.value.substr(InputBust.value.length - 4, 4) == 'inch') {
+      InputBust.value = InputBust.value.substr(0, InputBust.value.length - 4);
+    }
+    if (InputBust.value.substr(InputBust.value.length - 2, 2) == ' "' || InputBust.value.substr(InputBust.value.length - 2, 2) == ' in') {
+      InputBust.value = InputBust.value.substr(0, InputBust.value.length - 2);
+    }
+    if (InputBust.value.substr(InputBust.value.length - 1, 1) == '"'  || InputBust.value.substr(InputBust.value.length - 1, 1) == 'in') {
+      InputBust.value = InputBust.value.substr(0, InputBust.value.length - 1);
     }
 
-    Results.innerHTML = "<h2>" + bodyType + " BODY</h2>";
-
-    _dcq.push(["identify", {
-      email: InputEmail.value,
-      remove_tags: [notBody[0], notBody[1], notBody[2]],
-      tags: [dripBody],
-      success: function(response) {
-        console.log(response);
-      }
-    }]);
-  } else {
-    Results.innerHTML = "<h2>ERROR WITH ENTRY</h2>";
+    if (!InputBust.validity.valid || !InputWaist.validity.valid || !InputHips.validity.valid) {
+      MeasureErr.innerHTML = "<p class='errorText'>Please check your measurements. They should be numbers.</p>";
+    } else {
+      MeasureErr.innerHTML = "";
+    }
+    if (!InputEmail.validity.valid) {
+      EmailErr.innerHTML = "<p class='errorText'>Please enter a valid email.</p>";
+    } else {
+      EmailErr.innerHTML = "";
+    }
   }
-}
 
+  ResButton.addEventListener("click", getResults);
+  function getResults() {
+    bustVal  = parseFloat(InputBust.value);
+    waistVal = parseFloat(InputWaist.value);
+    hipsVal  = parseFloat(InputHips.value);
+    subVal   = InputSub.checked;
+    if (InputBust.validity.valid && InputWaist.validity.valid && InputHips.validity.valid && InputEmail.validity.valid &&
+        bustVal > 0 && waistVal > 0 && hipsVal > 0) {
+      if (bustVal / hipsVal >= 0.95 && bustVal / hipsVal <= 1.05) {
+        if (waistVal / bustVal > 0.75 && waistVal / hipsVal > 0.75) {
+          bodyType = "Banana";
+          dripBody = "Calculator Banana Result";
+          notBody  = ["Calculator Apple Result", "Calculator Hourglass Result", "Calculator Pear Result"];
+        } else {
+          bodyType = "Hourglass";
+          dripBody = "Calculator Hourglass Result";
+          notBody  = ["Calculator Apple Result", "Calculator Banana Result", "Calculator Pear Result"];
+        }
+      } else {
+        if (bustVal > hipsVal) {
+          bodyType = "Apple";
+          dripBody = "Calculator Apple Result";
+          notBody  = ["Calculator Banana Result", "Calculator Hourglass Result", "Calculator Pear Result"];
+        } else {
+          bodyType = "Pear";
+          dripBody = "Calculator Pear Result";
+          notBody  = ["Calculator Apple Result", "Calculator Banana Result", "Calculator Hourglass Result"];
+        }
+      }
+      MeasureErr.innerHTML = "";
+      EmailErr.innerHTML = "";
+      console.log(bodyType);
+      _dcq.push(["identify", {
+        email: InputEmail.value,
+        remove_tags: [notBody[0], notBody[1], notBody[2]],
+        tags: [dripBody],
+        success: function(response) {
+          console.log(response);
+        }
+      }]);
+    } else {
+      if (!InputBust.validity.valid || !InputWaist.validity.valid || !InputHips.validity.valid) {
+        MeasureErr.innerHTML = "<p class='errorText'>Please check your measurements. They should be numbers.</p>";
+      }
+      if (!InputEmail.validity.valid) {
+        EmailErr.innerHTML = "<p class='errorText'>Please enter a valid email.</p>";
+      }
+      console.log("error with entry");
+    }
+  }
 </script>
 
 </html>
