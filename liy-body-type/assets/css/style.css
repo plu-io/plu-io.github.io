@@ -23,8 +23,11 @@ label {
   margin: 0 1em 0 1em;
 }
 
+input:required {
+  box-shadow: none;
+}
+
 input {
-  border: 1px solid #eee;
   border: 1px solid #d8eae6;
   text-align: center;
   font-family: "Muli", Arial, Helvetica, sans-serif;
@@ -95,9 +98,11 @@ input[type=button]:hover {
   color: #f00;
 }
 
+/*
 :invalid {
   border: 1px solid #f00;
 }
+*/
 
 .section div {
   width: 100%;
