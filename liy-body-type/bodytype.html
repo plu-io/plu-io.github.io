@@ -20,19 +20,19 @@
       <div>
         <h2>BUST</h2>
       </div>
-      <input type="text" placeholder="inches"  pattern="[0-9]*" id="InputBust" required="true" />
+      <input type="text" placeholder="inches"  pattern="[0-9]*" id="InputBust" required />
     </div>
     <div class="section waist">
       <div>
         <h2>WAIST</h2>
       </div>
-      <input type="text" placeholder="inches" pattern="[0-9]*" id="InputWaist" required="true" />
+      <input type="text" placeholder="inches" pattern="[0-9]*" id="InputWaist" required />
     </div>
     <div class="section hips">
       <div>
         <h2>HIPS</h2>
       </div>
-      <input type="text" placeholder="inches"  pattern="[0-9]*" id="InputHips" required="true" />
+      <input type="text" placeholder="inches"  pattern="[0-9]*" id="InputHips" required />
     </div>
     <div class="section errorPar" id="measureErrorDiv">
 
@@ -80,6 +80,7 @@
       hipsVal    = null,
       subVal     = null,
       notBody    = [],
+      numClicks  = 0,
       InputBust  = document.getElementById("InputBust"),
       InputWaist = document.getElementById("InputWaist"),
       InputHips  = document.getElementById("InputHips"),
@@ -114,20 +115,24 @@
       InputBust.value = InputBust.value.substr(0, InputBust.value.length - 1);
     }
 
-    if (!InputBust.validity.valid || !InputWaist.validity.valid || !InputHips.validity.valid) {
-      MeasureErr.innerHTML = "<p class='errorText'>Please check your measurements. They should be numbers.</p>";
-    } else {
-      MeasureErr.innerHTML = "";
-    }
-    if (!InputEmail.validity.valid) {
-      EmailErr.innerHTML = "<p class='errorText'>Please enter a valid email.</p>";
-    } else {
-      EmailErr.innerHTML = "";
+    if (numClicks > 0) {
+      if (!InputBust.validity.valid || !InputWaist.validity.valid || !InputHips.validity.valid ||
+          isNaN(parseFloat(InputBust.value)) || isNaN(parseFloat(InputWaist.value)) || isNaN(parseFloat(InputHips.value))) {
+        MeasureErr.innerHTML = "<p class='errorText'>Please check your measurements. They should be numbers.</p>";
+      } else {
+        MeasureErr.innerHTML = "";
+      }
+      if (!InputEmail.validity.valid) {
+        EmailErr.innerHTML = "<p class='errorText'>Please enter a valid email.</p>";
+      } else {
+        EmailErr.innerHTML = "";
+      }
     }
   }
 
   ResButton.addEventListener("click", getResults);
   function getResults() {
+    numClicks++;
     bustVal  = parseFloat(InputBust.value);
     waistVal = parseFloat(InputWaist.value);
     hipsVal  = parseFloat(InputHips.value);
@@ -167,7 +172,8 @@
         }
       }]);
     } else {
-      if (!InputBust.validity.valid || !InputWaist.validity.valid || !InputHips.validity.valid) {
+      if (!InputBust.validity.valid || !InputWaist.validity.valid || !InputHips.validity.valid ||
+          isNaN(bustVal) || isNaN(waistVal) || isNaN(hipsVal)) {
         MeasureErr.innerHTML = "<p class='errorText'>Please check your measurements. They should be numbers.</p>";
       }
       if (!InputEmail.validity.valid) {
