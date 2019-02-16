@@ -41,17 +41,20 @@
       <div>
         <h2>EMAIL</h2>
       </div>
-      <input type="email" placeholder="hello@livinginyellow.com" id="InputEmail" autocomplete="email" required="true" />
+      <input type="email" class="" placeholder="hello@livinginyellow.com" id="InputEmail" autocomplete="email" required />
     </div>
     <div class="section errorPar" id="emailErrorDiv">
 
     </div>
     <div class="section subCheckbox">
       <input type="checkbox" id="SubscribeCheck" name="SubscribeCheck" checked>
-      <p>Subscribe?</p>
+      <label for="SubscribeCheck">Subscribe?</label>
     </div>
     <div class="section button">
       <input type="button" value="CALCULATE RESULTS" id="ResButton" />
+    </div>
+    <div class="section success" id="SuccessDiv">
+
     </div>
   </div>
 
@@ -80,6 +83,10 @@
       hipsVal    = null,
       subVal     = null,
       notBody    = [],
+      numBust    = 0,
+      numWaist   = 0,
+      numHips    = 0,
+      numEmail   = 0,
       numClicks  = 0,
       InputBust  = document.getElementById("InputBust"),
       InputWaist = document.getElementById("InputWaist"),
@@ -88,45 +95,79 @@
       InputEmail = document.getElementById("InputEmail"),
       EmailErr   = document.getElementById("emailErrorDiv"),
       InputSub   = document.getElementById("SubscribeCheck"),
-      ResButton  = document.getElementById("ResButton");
+      ResButton  = document.getElementById("ResButton"),
+      SuccessDiv = document.getElementById("SuccessDiv");
 
-  InputBust.addEventListener("blur", checkDatValidity);
-  InputWaist.addEventListener("blur", checkDatValidity);
-  InputHips.addEventListener("blur", checkDatValidity);
-  InputEmail.addEventListener("blur", checkDatValidity);
+  InputBust.addEventListener("blur", function(e) {
+    numBust++;
+    checkDatValidity(e);
+  });
+  InputWaist.addEventListener("blur", function(e) {
+    numWaist++;
+    checkDatValidity(e);
+  });
+  InputHips.addEventListener("blur", function(e) {
+    numHips++;
+    checkDatValidity(e);
+  });
+  InputEmail.addEventListener("blur", function(e) {
+    numEmail++;
+    checkDatValidity(e);
+  });
 
-  function checkDatValidity() {
-    if (InputBust.value.substr(InputBust.value.length - 7, 7) == ' inches') {
-      InputBust.value = InputBust.value.substr(0, InputBust.value.length - 7);
+  function checkDatValidity(e) {
+    if (e != 0) {
+      if (e.target.value.substr(e.target.value.length - 7, 7) == ' inches') {
+        e.target.value = e.target.value.substr(0, e.target.value.length - 7);
+      }
+      if (e.target.value.substr(e.target.value.length - 6, 6) == 'inches') {
+        e.target.value = e.target.value.substr(0, e.target.value.length - 6);
+      }
+      if (e.target.value.substr(e.target.value.length - 5, 5) == ' inch') {
+        e.target.value = e.target.value.substr(0, e.target.value.length - 5);
+      }
+      if (e.target.value.substr(e.target.value.length - 4, 4) == 'inch') {
+        e.target.value = e.target.value.substr(0, e.target.value.length - 4);
+      }
+      if (e.target.value.substr(e.target.value.length - 2, 2) == ' "' || e.target.value.substr(e.target.value.length - 2, 2) == ' in') {
+        e.target.value = e.target.value.substr(0, e.target.value.length - 2);
+      }
+      if (e.target.value.substr(e.target.value.length - 1, 1) == '"'  || e.target.value.substr(e.target.value.length - 1, 1) == 'in') {
+        e.target.value = e.target.value.substr(0, e.target.value.length - 1);
+      }
     }
-    if (InputBust.value.substr(InputBust.value.length - 6, 6) == 'inches') {
-      InputBust.value = InputBust.value.substr(0, InputBust.value.length - 6);
-    }
-    if (InputBust.value.substr(InputBust.value.length - 5, 5) == ' inch') {
-      InputBust.value = InputBust.value.substr(0, InputBust.value.length - 5);
-    }
-    if (InputBust.value.substr(InputBust.value.length - 4, 4) == 'inch') {
-      InputBust.value = InputBust.value.substr(0, InputBust.value.length - 4);
-    }
-    if (InputBust.value.substr(InputBust.value.length - 2, 2) == ' "' || InputBust.value.substr(InputBust.value.length - 2, 2) == ' in') {
-      InputBust.value = InputBust.value.substr(0, InputBust.value.length - 2);
-    }
-    if (InputBust.value.substr(InputBust.value.length - 1, 1) == '"'  || InputBust.value.substr(InputBust.value.length - 1, 1) == 'in') {
-      InputBust.value = InputBust.value.substr(0, InputBust.value.length - 1);
-    }
-
-    if (numClicks > 0) {
-      if (!InputBust.validity.valid || !InputWaist.validity.valid || !InputHips.validity.valid ||
-          isNaN(parseFloat(InputBust.value)) || isNaN(parseFloat(InputWaist.value)) || isNaN(parseFloat(InputHips.value))) {
+    if (!InputBust.validity.valid || !InputWaist.validity.valid || !InputHips.validity.valid) {
+      if (numClicks > 0 || (numBust > 0 && numWaist > 0 && numHips > 0) ||
+         (InputBust.value != "" && InputWaist.value != "" && InputHips.value != "")) {
         MeasureErr.innerHTML = "<p class='errorText'>Please check your measurements. They should be numbers.</p>";
-      } else {
-        MeasureErr.innerHTML = "";
+        if (!InputBust.validity.valid) {
+          InputBust.classList.add("errorEntry");
+        } else {
+          InputBust.classList.remove("errorEntry");
+        }
+        if (!InputWaist.validity.valid) {
+          InputWaist.classList.add("errorEntry");
+        } else {
+          InputWaist.classList.remove("errorEntry");
+        }
+        if (!InputHips.validity.valid) {
+          InputHips.classList.add("errorEntry");
+        } else {
+          InputHips.classList.remove("errorEntry");
+        }
       }
-      if (!InputEmail.validity.valid) {
-        EmailErr.innerHTML = "<p class='errorText'>Please enter a valid email.</p>";
-      } else {
-        EmailErr.innerHTML = "";
-      }
+    } else {
+      MeasureErr.innerHTML = "";
+      InputBust.classList.remove("errorEntry");
+      InputWaist.classList.remove("errorEntry");
+      InputHips.classList.remove("errorEntry");
+    }
+    if (!InputEmail.validity.valid && (numEmail > 0 || numClicks > 0)) {
+      EmailErr.innerHTML = "<p class='errorText'>Please enter a valid email.</p>";
+      InputEmail.classList.add("errorEntry");
+    } else {
+      EmailErr.innerHTML = "";
+      InputEmail.classList.remove("errorEntry");
     }
   }
 
@@ -138,7 +179,7 @@
     hipsVal  = parseFloat(InputHips.value);
     subVal   = InputSub.checked;
     if (InputBust.validity.valid && InputWaist.validity.valid && InputHips.validity.valid && InputEmail.validity.valid &&
-        bustVal > 0 && waistVal > 0 && hipsVal > 0) {
+        bustVal > 0 && waistVal > 0 && hipsVal > 0 && InputEmail.value != "") {
       if (bustVal / hipsVal >= 0.95 && bustVal / hipsVal <= 1.05) {
         if (waistVal / bustVal > 0.75 && waistVal / hipsVal > 0.75) {
           bodyType = "Banana";
@@ -167,19 +208,18 @@
         email: InputEmail.value,
         remove_tags: [notBody[0], notBody[1], notBody[2]],
         tags: [dripBody],
+        failure: function(response) {
+          console.log(response);
+          SuccessDiv.innerHTML = "<p>Something went wrong! Try again.</p>";
+        },
         success: function(response) {
           console.log(response);
+          SuccessDiv.innerHTML = "<p>Your body type has been recorded!</p>";
         }
       }]);
     } else {
-      if (!InputBust.validity.valid || !InputWaist.validity.valid || !InputHips.validity.valid ||
-          isNaN(bustVal) || isNaN(waistVal) || isNaN(hipsVal)) {
-        MeasureErr.innerHTML = "<p class='errorText'>Please check your measurements. They should be numbers.</p>";
-      }
-      if (!InputEmail.validity.valid) {
-        EmailErr.innerHTML = "<p class='errorText'>Please enter a valid email.</p>";
-      }
       console.log("error with entry");
+      checkDatValidity(0);
     }
   }
 </script>
