@@ -18,16 +18,11 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Karla", Arial, Helvetica, sans-serif;
 }
 
-label {
-  font-size: 15px;
-  margin: 0 1em 0 1em;
-}
-
 input:required {
   box-shadow: none;
 }
 
-input {
+input[type=text], input[type=email], input[type=button] {
   border: 1px solid #d8eae6;
   text-align: center;
   font-family: "Muli", Arial, Helvetica, sans-serif;
@@ -50,7 +45,7 @@ input[type=checkbox] {
 }
 
 input[type=button] {
-  border: 0;
+  border: none;
   font-family: "Karla", Arial, Helvetica, sans-serif;
   font-size: 15px;
   background-color: #999;
@@ -62,12 +57,18 @@ input:focus, input:hover {
   border: 2px solid #caa8ad;
 }
 
+input[type=text]:focus, input[type=text]:hover,
+input[type=email]:focus, input[type=email]:hover,
+input[type=button]:focus, input[type=button]:hover {
+  outline: none;
+}
+
 input[type=button]:focus {
-  border: 0;
+  border: none;
 }
 
 input[type=button]:hover {
-  border: 0;
+  border: none;
   background-color: #caa8ad;
 }
 
@@ -98,11 +99,10 @@ input[type=button]:hover {
   color: #f00;
 }
 
-/*
-:invalid {
-  border: 1px solid #f00;
+.errorEntry {
+  outline: 1px solid #f00;
+  outline-offset: -1px;
 }
-*/
 
 .section div {
   width: 100%;
