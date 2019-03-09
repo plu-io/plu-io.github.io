@@ -88,11 +88,16 @@ input[type=button]:hover {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  padding: 10px 0px 10px 0px;
+  padding: 8px 0px 8px 0px;
 }
 
-.errorPar {
-  padding: 10px 10px 10px 10px;
+.errorPar, .subCheckbox {
+  padding: 8px 8px 8px 8px;
+}
+
+.subCheckbox p {
+  font-size: 12px;
+  text-align: center
 }
 
 .errorText {
