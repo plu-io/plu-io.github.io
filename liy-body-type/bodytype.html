@@ -47,14 +47,17 @@
 
     </div>
     <div class="section subCheckbox">
+      <!--
       <input type="checkbox" id="SubscribeCheck" name="SubscribeCheck" checked>
-      <label for="SubscribeCheck">Subscribe?</label>
+      <label for="SubscribeCheck">By submitting your measurements, you're agreeing to receive marketing communications from Shape Squad and Living In Yellow</label>
+      -->
+      <p>By submitting your measurements, you're agreeing to receive marketing communications from Shape Squad and Living In Yellow</p>
     </div>
     <div class="section button">
-      <input type="button" value="CALCULATE RESULTS" id="ResButton" />
+      <input type="button" value="SUBMIT" id="ResButton" />
     </div>
     <div class="section success" id="SuccessDiv">
-
+      <p></p>
     </div>
   </div>
 
@@ -94,7 +97,7 @@
       MeasureErr = document.getElementById("measureErrorDiv"),
       InputEmail = document.getElementById("InputEmail"),
       EmailErr   = document.getElementById("emailErrorDiv"),
-      InputSub   = document.getElementById("SubscribeCheck"),
+      //InputSub   = document.getElementById("SubscribeCheck"),
       ResButton  = document.getElementById("ResButton"),
       SuccessDiv = document.getElementById("SuccessDiv");
 
@@ -102,16 +105,28 @@
     numBust++;
     checkDatValidity(e);
   });
+  InputBust.addEventListener("input", function(e) {
+    checkDatValidity(e);
+  });
   InputWaist.addEventListener("blur", function(e) {
     numWaist++;
+    checkDatValidity(e);
+  });
+  InputWaist.addEventListener("input", function(e) {
     checkDatValidity(e);
   });
   InputHips.addEventListener("blur", function(e) {
     numHips++;
     checkDatValidity(e);
   });
+  InputHips.addEventListener("input", function(e) {
+    checkDatValidity(e);
+  });
   InputEmail.addEventListener("blur", function(e) {
     numEmail++;
+    checkDatValidity(e);
+  });
+  InputEmail.addEventListener("input", function(e) {
     checkDatValidity(e);
   });
 
@@ -177,7 +192,7 @@
     bustVal  = parseFloat(InputBust.value);
     waistVal = parseFloat(InputWaist.value);
     hipsVal  = parseFloat(InputHips.value);
-    subVal   = InputSub.checked;
+    //subVal   = InputSub.checked;
     if (InputBust.validity.valid && InputWaist.validity.valid && InputHips.validity.valid && InputEmail.validity.valid &&
         bustVal > 0 && waistVal > 0 && hipsVal > 0 && InputEmail.value != "") {
       if (bustVal / hipsVal >= 0.95 && bustVal / hipsVal <= 1.05) {
@@ -209,12 +224,16 @@
         remove_tags: [notBody[0], notBody[1], notBody[2]],
         tags: [dripBody],
         failure: function(response) {
-          console.log(response);
+          //console.log(response);
           SuccessDiv.innerHTML = "<p>Something went wrong! Try again.</p>";
         },
         success: function(response) {
-          console.log(response);
-          SuccessDiv.innerHTML = "<p>Your body type has been recorded!</p>";
+          //console.log(response);
+          InputBust.disabled = true;
+          InputWaist.disabled = true;
+          InputHips.disabled = true;
+          InputEmail.disabled = true;
+          SuccessDiv.innerHTML = "<p>Check your inbox to see which beautiful body type you have!</p>";
         }
       }]);
     } else {
