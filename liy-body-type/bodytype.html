@@ -54,7 +54,7 @@
       <p>By submitting your measurements, you're agreeing to receive marketing communications from Shape Squad and Living In Yellow</p>
     </div>
     <div class="section button">
-      <input type="button" value="SUBMIT" id="ResButton" />
+      <input type="button" value="TELL ME MY BODY TYPE!" id="ResButton" />
     </div>
     <div class="section success" id="SuccessDiv">
       <p></p>
@@ -100,7 +100,6 @@
       //InputSub   = document.getElementById("SubscribeCheck"),
       ResButton  = document.getElementById("ResButton"),
       SuccessDiv = document.getElementById("SuccessDiv");
-
   InputBust.addEventListener("blur", function(e) {
     numBust++;
     checkDatValidity(e);
@@ -129,7 +128,6 @@
   InputEmail.addEventListener("input", function(e) {
     checkDatValidity(e);
   });
-
   function checkDatValidity(e) {
     if (e != 0) {
       if (e.target.value.substr(e.target.value.length - 7, 7) == ' inches') {
@@ -185,7 +183,6 @@
       InputEmail.classList.remove("errorEntry");
     }
   }
-
   ResButton.addEventListener("click", getResults);
   function getResults() {
     numClicks++;
@@ -218,22 +215,29 @@
       }
       MeasureErr.innerHTML = "";
       EmailErr.innerHTML = "";
-      console.log(bodyType);
+      //console.log(bodyType);
       _dcq.push(["identify", {
         email: InputEmail.value,
         remove_tags: [notBody[0], notBody[1], notBody[2]],
         tags: [dripBody],
         failure: function(response) {
-          //console.log(response);
           SuccessDiv.innerHTML = "<p>Something went wrong! Try again.</p>";
         },
         success: function(response) {
-          //console.log(response);
           InputBust.disabled = true;
           InputWaist.disabled = true;
           InputHips.disabled = true;
           InputEmail.disabled = true;
           SuccessDiv.innerHTML = "<p>Check your inbox to see which beautiful body type you have!</p>";
+          if (bodyType == "Apple") {
+            window.location.href = "applebody.html";
+          } else if (bodyType == "Banana") {
+            window.location.href = "bananabody.html";
+          } else if (bodyType == "Hourglass") {
+            window.location.href = "hourglassbody.html";
+          } else if (bodyType == "Pear") {
+            window.location.href = "pearbody.html";
+          }
         }
       }]);
     } else {
